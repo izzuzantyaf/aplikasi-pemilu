@@ -30,12 +30,6 @@ void regis()
     rewind(peserta);
     while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password) != EOF)
     {
-
-        //fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
-        //printf("%s\n%s\n%s\n%s\n%s\n%s\n", psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
-        //printf("%d\n", jumlahPeserta);
-        //printf("%d\n%s\n%s\n%s\n%s\n%s\n%s\n", jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
-        printf("%d", jumlahPeserta);
         i++;
     }
     if (jumlahPeserta <= 100)
@@ -66,24 +60,8 @@ void regis()
         //psrt[i].statusPilih = false;
 
         jumlahPeserta++;
-
-        //i++;
-        //break;
     }
 
-    /*for (i = 1; i <= jumlahPeserta; i++)
-    {
-        printf("%d\n%s\n%s\n%s\n%s\n%s\n%s\n", jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
-    }*/
-
-    /*else
-    {
-        printf("\nJumlah pserta sudah mencapai batas\n");
-    }*/
-    //for (i = 1; i <= jumlahPeserta; i++)
-    //{
-
-    //}
     if (jumlahPeserta >= 2)
     {
         for (pass = 1; pass < jumlahPeserta; pass++)
@@ -120,19 +98,11 @@ void regis()
         }
     }
     fclose(peserta);
-    /*for (i = 1; i <= jumlahPeserta; i++)
-    {
-        printf("%d\n%s\n%s\n%s\n%s\n%s\n%s\n", jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
-    }*/
 
     peserta = fopen("peserta.txt", "w+");
 
     for (i = 1; i <= jumlahPeserta; i++)
     {
-        /*if (i == 100)
-        {
-            fprintf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s", i, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
-        }*/
         if (i > 1)
         {
             fprintf(peserta, "\n%d\n%s\n%s\n%s\n%s\n%s\n%s", i, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
@@ -147,7 +117,7 @@ void regis()
 /////////////////////////////////////////////////  REGISTRASI PESERTA
 
 /////////////////////////////////////////////////  LOGIN
-void login()
+int login()
 {
     peserta = fopen("peserta.txt", "r");
     bool ketemu = false;
@@ -180,6 +150,7 @@ void login()
         }
     }
     fclose(peserta);
+    return 0;
 }
 /////////////////////////////////////////////////  LOGIN
 
@@ -222,15 +193,19 @@ void editCalon()
     char namaCalonDiubah[32];
     kahim = fopen("calon.txt", "a+");
     i = 1;
+
     rewind(kahim);
+
     while (fscanf(kahim, "%d\n%s\n%s", &jumlahCalon, calon[i].nama, calon[i].visiMisi) != EOF)
     {
         printf("%s\n", calon[i].nama);
         printf("%d", jumlahCalon);
         i++;
     }
+
     printf("masukkan nama calon yang akan diubah : ");
     scanf("%s", &namaCalonDiubah);
+
     for (i = 1; i <= jumlahCalon; i++)
     {
         if (strcmp(namaCalonDiubah, calon[i].nama) == 0)
@@ -240,12 +215,16 @@ void editCalon()
             break;
         }
     }
+
     printf("masukkan data yang baru\n");
+
     printf("masukkan nama calon baru : ");
     scanf("%s", &calon[i].nama);
+
     printf("masukkan visi & misi baru : ");
     scanf("%s", &calon[i].visiMisi);
     fclose(kahim);
+
     kahim = fopen("calon.txt", "w+");
     for (i = 1; i <= jumlahCalon; i++)
     {
@@ -309,8 +288,8 @@ void hapusCalon()
 /////////////////////////////////////////////////  EDIT PESERTA
 void editPeserta()
 {
-    int i;
-    char namaPesertaDiubah[32];
+    int i, pilihanUbah;
+    char namaPesertaDiubah[32], dataBaru[32];
     peserta = fopen("peserta.txt", "a+");
     i = 1;
     rewind(peserta);
@@ -326,24 +305,63 @@ void editPeserta()
     {
         if (strcmp(namaPesertaDiubah, psrt[i].nama) == 0)
         {
-            fprintf(peserta, "\n%d\n%s\n%s\n%s\n%s\n%s\n%s", i, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
             break;
         }
     }
-    fclose(kahim);
-    kahim = fopen("calon.txt", "w+");
-    for (i = 1; i <= jumlahCalon; i++)
+    printf("\n1 Nama : %s\n2 NIM : %s\n3 Alamat : %s\n4 Nomor HP : %s\n5 Username : %s\n6 Password : %s", psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
+    printf("\n\nmasukkan pilihan ubah : ");
+    scanf("%d", &pilihanUbah);
+    switch (pilihanUbah)
     {
+    case 1:
+        printf("masukkan nama baru : ");
+        scanf("%s", &dataBaru);
+        strcpy(psrt[i].nama, dataBaru);
+        break;
+    case 2:
+        printf("masukkan NIM baru : ");
+        scanf("%s", &dataBaru);
+        strcpy(psrt[i].nim, dataBaru);
+        break;
+    case 3:
+        printf("masukkan alamat baru : ");
+        scanf("%s", &dataBaru);
+        strcpy(psrt[i].alamat, dataBaru);
+        break;
+    case 4:
+        printf("masukkan nomor hp baru : ");
+        scanf("%s", &dataBaru);
+        strcpy(psrt[i].noHp, dataBaru);
+        break;
+    case 5:
+        printf("masukkan username baru : ");
+        scanf("%s", &dataBaru);
+        strcpy(psrt[i].user, dataBaru);
+        break;
+    case 6:
+        printf("masukkan password baru : ");
+        scanf("%s", &dataBaru);
+        strcpy(psrt[i].password, dataBaru);
+        break;
+    default:
+        printf("pilihan salah\n");
+        break;
+    }
+    fclose(peserta);
+    peserta = fopen("peserta.txt", "w+");
+    for (i = 1; i <= jumlahPeserta; i++)
+    {
+
         if (i == 1)
         {
-            fprintf(kahim, "%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
+            fprintf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s", i, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
         }
         else
         {
-            fprintf(kahim, "\n%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
+            fprintf(peserta, "\n%d\n%s\n%s\n%s\n%s\n%s\n%s", i, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
         }
     }
-    fclose(kahim);
+    fclose(peserta);
 }
 /////////////////////////////////////////////////  EDIT PESERTA
 
@@ -380,6 +398,8 @@ void menuAdmin()
         regis();
         break;
     case 5:
+        editPeserta();
+        menuAdmin();
         break;
     case 6:
         break;
