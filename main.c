@@ -16,7 +16,7 @@ struct pemilih
     bool statusPilih;
 } psrt[100];
 
-struct calon
+struct cln
 {
     char nama[32], visiMisi[32];
 } calon[10];
@@ -27,9 +27,6 @@ void regis()
 {
     peserta = fopen("peserta.txt", "a+");
     i = 1;
-    //fseek(peserta, 0, SEEK_END);
-    //size = ftell(peserta);
-    //printf("%d", size);
     rewind(peserta);
     while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password) != EOF)
     {
@@ -41,7 +38,6 @@ void regis()
         printf("%d", jumlahPeserta);
         i++;
     }
-    //i--;
     if (jumlahPeserta <= 100)
     {
 
@@ -123,7 +119,7 @@ void regis()
             }
         }
     }
-
+    fclose(peserta);
     /*for (i = 1; i <= jumlahPeserta; i++)
     {
         printf("%d\n%s\n%s\n%s\n%s\n%s\n%s\n", jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
@@ -168,8 +164,6 @@ void login()
     {
         while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password) != EOF)
         {
-            //printf("%d ", jumlahPeserta);
-            //printf("%s %s ", psrt[i].user, psrt[i].password);
             if (strcmp(userLogin, psrt[i].user) == 0 && strcmp(passwordLogin, psrt[i].password) == 0)
             {
                 ketemu = true;
@@ -185,26 +179,8 @@ void login()
             main();
         }
     }
-    /*for (i = 1; i <= jumlahPeserta; i++)
-    {
-        if (strcmp(userLogin, psrt[i].user) == 0 && strcmp(passwordLogin, psrt[i].password) == 0)
-        {
-            printf("login berhasil");
-        }
-    }
-    for (i = 1; i <= 1; i++)
-    {
-        printf("%s %s", psrt[i].user, psrt[i].password);
-    }*/
     fclose(peserta);
-    //printf("%s", *userLogin);
-    //fgets(*userLogin, peserta);
-    /*if (strstr(userLogin, peserta) == 0 && strstr(passwordLogin, peserta) == 0)
-    {
-        printf("Login berhasil");
-    }*/
 }
-
 /////////////////////////////////////////////////  LOGIN
 
 /////////////////////////////////////////////////  TAMBAH CALON
@@ -239,6 +215,7 @@ void tambahCalon()
 }
 /////////////////////////////////////////////////  TAMBAH CALON
 
+/////////////////////////////////////////////////  EDIT CALON
 void editCalon()
 {
     int i;
@@ -250,6 +227,7 @@ void editCalon()
     {
         printf("%s\n", calon[i].nama);
         printf("%d", jumlahCalon);
+        i++;
     }
     printf("masukkan nama calon yang akan diubah : ");
     scanf("%s", &namaCalonDiubah);
@@ -257,11 +235,11 @@ void editCalon()
     {
         if (strcmp(namaCalonDiubah, calon[i].nama) == 0)
         {
+            printf("%d", i);
             printf("%s\n%s", calon[i].nama, calon[i].visiMisi);
             break;
         }
     }
-    printf("%s\n%s\n", calon[i].nama, calon[i].visiMisi);
     printf("masukkan data yang baru\n");
     printf("masukkan nama calon baru : ");
     scanf("%s", &calon[i].nama);
@@ -271,27 +249,30 @@ void editCalon()
     kahim = fopen("calon.txt", "w+");
     for (i = 1; i <= jumlahCalon; i++)
     {
-        if (i > 1)
+        if (i == 1)
         {
-            fprintf(kahim, "\n%s\n%s", calon[i].nama, calon[i].visiMisi);
+            fprintf(kahim, "%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
         }
         else
         {
-            fprintf(kahim, "\n%s\n%s", calon[i].nama, calon[i].visiMisi);
+            fprintf(kahim, "\n%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
         }
     }
     fclose(kahim);
 }
+/////////////////////////////////////////////////  EDIT CALON
 
 /////////////////////////////////////////////////  HAPUS CALON
 void hapusCalon()
 {
     int j;
+    i = 1;
     kahim = fopen("calon.txt", "a+");
     char namaCalonDihapus[32];
     while (fscanf(kahim, "%d\n%s\n%s", &jumlahCalon, calon[i].nama, calon[i].visiMisi) != EOF)
     {
         printf("%s\n", calon[i].nama);
+        i++;
     }
     printf("masukkan nama calon yang akan dihapus : ");
     scanf("%s", &namaCalonDihapus);
@@ -304,7 +285,6 @@ void hapusCalon()
             {
                 strcpy(calon[j].nama, calon[j + 1].nama);
                 strcpy(calon[j].visiMisi, calon[j + 1].visiMisi);
-                //printf("%s %s", calon[i].nama, calon[i].visiMisi);
             }
             break;
         }
@@ -324,14 +304,56 @@ void hapusCalon()
     }
     fclose(kahim);
 }
-
 /////////////////////////////////////////////////  HAPUS CALON
 
+/////////////////////////////////////////////////  EDIT PESERTA
+void editPeserta()
+{
+    int i;
+    char namaPesertaDiubah[32];
+    peserta = fopen("peserta.txt", "a+");
+    i = 1;
+    rewind(peserta);
+    while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password) != EOF)
+    {
+        printf("%s\n", psrt[i].nama);
+        //printf("%d", jumlahCalon);
+        i++;
+    }
+    printf("masukkan nama peserta yang akan diubah : ");
+    scanf("%s", &namaPesertaDiubah);
+    for (i = 1; i <= jumlahPeserta; i++)
+    {
+        if (strcmp(namaPesertaDiubah, psrt[i].nama) == 0)
+        {
+            fprintf(peserta, "\n%d\n%s\n%s\n%s\n%s\n%s\n%s", i, psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
+            break;
+        }
+    }
+    fclose(kahim);
+    kahim = fopen("calon.txt", "w+");
+    for (i = 1; i <= jumlahCalon; i++)
+    {
+        if (i == 1)
+        {
+            fprintf(kahim, "%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
+        }
+        else
+        {
+            fprintf(kahim, "\n%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
+        }
+    }
+    fclose(kahim);
+}
+/////////////////////////////////////////////////  EDIT PESERTA
+
+/////////////////////////////////////////////////  HAPUS PESERTA
+void hapusPeserta()
+{
+}
+/////////////////////////////////////////////////  HAPUS PESERTA
 void menuAdmin()
 {
-    //kahim = fopen("calon.txt", "a+");
-    //peserta = fopen("peserta.txt", "a+");
-    //data = fopen("data.txt", "r");
     int pilihanAdmin;
     printf("Menu Admin\n");
     printf("1. Tambah calon\n2. Edit calon\n3. Hapus calon\n4. Tambah peserta\n5. Edit peserta\n6. Hapus peserta\n7. Statistik\n8. Filter suara\n9. Beranda\n\n");
@@ -341,11 +363,13 @@ void menuAdmin()
     {
     case 1:
         tambahCalon();
-        system("cls");
+        //system("cls");
         menuAdmin();
         break;
     case 2:
         editCalon();
+        //system("cls");
+        menuAdmin();
         break;
     case 3:
         hapusCalon();
