@@ -1,9 +1,12 @@
 1
-ardhana_s
+ardhana_s	1
 sudah_ada
 2
-ilham_maulana
-visiMisi_yang_terdepan
+fauzi_bayus	1
+menjadikan_terbaik
 3
-ismatullah_h
+ilham_maulana	1
 kampus_tercerdas
+4
+ismatullah_h	1
+kampus-terdepan

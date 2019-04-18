@@ -15,4 +15,4 @@ bandung
 946798
 izzuzf
 massive
-sudah_memilih
+belum_memilih
