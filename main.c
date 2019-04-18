@@ -218,10 +218,9 @@ void editCalon()
 
     rewind(kahim);
 
-    while (fscanf(kahim, "%d\n%s\n%s", &jumlahCalon, calon[i].nama, calon[i].visiMisi) != EOF)
+    while (fscanf(kahim, "%d\n%s\t%d\n%s", &jumlahCalon, calon[i].nama, &calon[i].suara, calon[i].visiMisi) != EOF)
     {
         printf("%s\n", calon[i].nama);
-        printf("%d", jumlahCalon);
         i++;
     }
 
@@ -238,7 +237,7 @@ void editCalon()
         }
     }
 
-    printf("masukkan data yang baru\n");
+    printf("\nmasukkan data yang baru\n");
 
     printf("masukkan nama calon baru : ");
     scanf("%s", &calon[i].nama);
@@ -252,11 +251,11 @@ void editCalon()
     {
         if (i == 1)
         {
-            fprintf(kahim, "%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
+            fprintf(kahim, "%d\n%s\t%d\n%s", jumlahCalon, calon[i].nama, calon[i].suara, calon[i].visiMisi);
         }
         else
         {
-            fprintf(kahim, "\n%d\n%s\n%s", i, calon[i].nama, calon[i].visiMisi);
+            fprintf(kahim, "\n%d\n%s\t%d\n%s", &jumlahCalon, calon[i].nama, calon[i].suara, calon[i].visiMisi);
         }
     }
     fclose(kahim);
@@ -517,7 +516,7 @@ void statistik()
 void menuAdmin()
 {
     int pilihanAdmin;
-    printf("Menu Admin\n");
+    printf("\nMenu Admin\n");
     printf("1. Tambah calon\n2. Edit calon\n3. Hapus calon\n4. Tambah peserta\n5. Edit peserta\n6. Hapus peserta\n7. Statistik\n8. Filter suara\n9. Beranda\n\n");
     printf("masukkan pilihan : ");
     scanf("%d", &pilihanAdmin);
