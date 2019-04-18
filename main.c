@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 /////////////////////////////////////////////////  DEKLARASI VARIABEL DAN STRUCT
 int pilihan, i, jumlahPeserta, jumlahCalon, pass, size, ketemu, indexPilih, jumlahSuara = 0;
@@ -27,8 +26,9 @@ struct cln
 /////////////////////////////////////////////////  REGISTRASI PESERTA
 void regis()
 {
-    peserta = fopen("peserta.txt", "a+");
+    int j;
     i = 1;
+    peserta = fopen("peserta.txt", "a+");
     rewind(peserta);
     while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].angkatan, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password, psrt[i].statusPilih) != EOF)
     {
@@ -56,8 +56,27 @@ void regis()
         printf("Masukkan nomor HP   : ");
         scanf("%s", &psrt[i].noHp);
 
-        printf("Masukkan username   : ");
+        printf("\nMasukkan username   : ");
         scanf("%s", &psrt[i].user);
+
+        for (j = 1; j <= jumlahPeserta; j++)
+        {
+            if (strcmp(psrt[i].user, psrt[j].user) == 0)
+            {
+                while (strcmp(psrt[i].user, psrt[j].user) == 0)
+                {
+                    system("cls");
+                    printf("\nMaaf username telah digunakan, silakan gunakan username yang berbeda\n");
+                    printf("\nMasukkan nama       : %s", psrt[i].nama);
+                    printf("\nMasukkan NIM        : %s", psrt[i].nim);
+                    printf("\nMasukkan angkatan   : %s", psrt[i].angkatan);
+                    printf("\nMasukkan alamat     : %s", psrt[i].alamat);
+                    printf("\nMasukkan nomor HP   : %s", psrt[i].noHp);
+                    printf("\nMasukkan username   : ");
+                    scanf("%s", &psrt[i].user);
+                }
+            }
+        }
 
         printf("Masukkan password   : ");
         scanf("%s", &psrt[i].password);
@@ -574,6 +593,9 @@ int main()
     {
     case 1:
         regis();
+        system("cls");
+        printf("\nAnda telah terdaftar sebagai pemilih\n\n");
+        system("pause");
         system("cls");
         main();
         break;
