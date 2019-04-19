@@ -3,7 +3,7 @@
 #include <string.h>
 
 /////////////////////////////////////////////////  DEKLARASI VARIABEL DAN STRUCT
-int pilihan, i, jumlahPeserta, jumlahCalon, pass, size, ketemu, indexPilih, jumlahSuara = 0;
+int pilihan, i, jumlahPeserta, jumlahCalon, pass, size, ketemu, indexPilih, jumlahSuara = 0, pilihanFilter;
 char temp[32], userLogin[32], passwordLogin[32];
 
 FILE *peserta;
@@ -37,7 +37,7 @@ void regis()
     if (jumlahPeserta <= 100)
     {
 
-        printf("Masukkan nama       : ");
+        printf("\nMasukkan nama       : ");
         fflush(stdin);
         fgets(psrt[i].nama, 32, stdin);
         strtok(psrt[i].nama, "\n");
@@ -145,6 +145,9 @@ void regis()
         }
     }
     fclose(peserta);
+    system("cls");
+    printf("\nRegistrasi berhasil\n\n");
+    system("pause");
 }
 /////////////////////////////////////////////////  REGISTRASI PESERTA
 
@@ -177,15 +180,14 @@ void login()
                 }
                 else
                 {
-                    printf("\nAnda telah menggunakan hak pilih anda");
+                    printf("\nAnda telah menggunakan hak pilih anda\n\n");
                 }
             }
             i++;
         }
         if (ketemu == 0)
         {
-            printf("\nusername / password anda mungkin salah atau belum terdaftar sebagai pemilih");
-            main();
+            printf("\nusername / password anda mungkin salah atau belum terdaftar sebagai pemilih\n\n");
         }
     }
     fclose(peserta);
@@ -203,12 +205,12 @@ void tambahCalon()
         i++;
     }
 
-    printf("masukkan nama calon  : ");
+    printf("Masukkan nama calon  : ");
     fflush(stdin);
     fgets(calon[i].nama, 32, stdin);
     strtok(calon[i].nama, "\n");
 
-    printf("masukkan visi & misi : ");
+    printf("Masukkan visi & misi : ");
     fflush(stdin);
     fgets(calon[i].visiMisi, 32, stdin);
     strtok(calon[i].visiMisi, "\n");
@@ -223,7 +225,10 @@ void tambahCalon()
     {
         fprintf(kahim, "\n%d\n%s\t%d\n%s", i, calon[i].nama, calon[i].suara, calon[i].visiMisi);
     }
+
     fclose(kahim);
+
+    printf("\nCalon berhasil ditambahkan\n\n");
 }
 /////////////////////////////////////////////////  TAMBAH CALON
 
@@ -243,7 +248,7 @@ void editCalon()
         i++;
     }
 
-    printf("masukkan nama calon yang akan diubah : ");
+    printf("Masukkan nama calon yang akan diubah : ");
     scanf("%s", &namaCalonDiubah);
 
     for (i = 1; i <= jumlahCalon; i++)
@@ -256,12 +261,12 @@ void editCalon()
         }
     }
 
-    printf("\nmasukkan data yang baru\n");
+    printf("\nMasukkan data yang baru\n");
 
-    printf("masukkan nama calon baru : ");
+    printf("Masukkan nama calon baru : ");
     scanf("%s", &calon[i].nama);
 
-    printf("masukkan visi & misi baru : ");
+    printf("Masukkan visi & misi baru : ");
     scanf("%s", &calon[i].visiMisi);
     fclose(kahim);
 
@@ -278,6 +283,7 @@ void editCalon()
         }
     }
     fclose(kahim);
+    printf("Calon berhasil diedit\n\n");
 }
 /////////////////////////////////////////////////  EDIT CALON
 
@@ -288,12 +294,14 @@ void hapusCalon()
     i = 1;
     kahim = fopen("calon.txt", "a+");
     char namaCalonDihapus[32];
+
     while (fscanf(kahim, "%d\n%s\n%s", &jumlahCalon, calon[i].nama, calon[i].visiMisi) != EOF)
     {
         printf("%s\n", calon[i].nama);
         i++;
     }
-    printf("masukkan nama calon yang akan dihapus : ");
+
+    printf("Masukkan nama calon yang akan dihapus : ");
     scanf("%s", &namaCalonDihapus);
 
     for (i = 1; i <= jumlahCalon; i++)
@@ -338,7 +346,7 @@ void editPeserta()
         printf("%s\n", psrt[i].nama);
         i++;
     }
-    printf("masukkan nama peserta yang akan diubah : ");
+    printf("Masukkan nama peserta yang akan diubah : ");
     scanf("%s", &namaPesertaDiubah);
     for (i = 1; i <= jumlahPeserta; i++)
     {
@@ -347,38 +355,43 @@ void editPeserta()
             break;
         }
     }
-    printf("\n1 Nama : %s\n2 NIM : %s\n3 Alamat : %s\n4 Nomor HP : %s\n5 Username : %s\n6 Password : %s", psrt[i].nama, psrt[i].nim, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
-    printf("\n\nmasukkan pilihan ubah : ");
+    printf("\n1. Nama : %s\n2. NIM : %s\n3. Angkatan  : %s\n4. Alamat : %s\n5. No HP : %s\n6. Username : %s\n7. Password : %s", psrt[i].nama, psrt[i].nim, psrt[i].angkatan, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password);
+    printf("\n\nMasukkan pilihan ubah : ");
     scanf("%d", &pilihanUbah);
     switch (pilihanUbah)
     {
     case 1:
-        printf("masukkan nama baru : ");
+        printf("Masukkan nama baru     : ");
         scanf("%s", &dataBaru);
         strcpy(psrt[i].nama, dataBaru);
         break;
     case 2:
-        printf("masukkan NIM baru : ");
+        printf("Masukkan NIM baru      : ");
         scanf("%s", &dataBaru);
         strcpy(psrt[i].nim, dataBaru);
         break;
     case 3:
-        printf("masukkan alamat baru : ");
+        printf("Masukkan angaktan baru : ");
+        scanf("%s", &dataBaru);
+        strcpy(psrt[i].angkatan, dataBaru);
+        break;
+    case 4:
+        printf("Masukkan alamat baru   : ");
         scanf("%s", &dataBaru);
         strcpy(psrt[i].alamat, dataBaru);
         break;
-    case 4:
-        printf("masukkan nomor hp baru : ");
+    case 5:
+        printf("Masukkan nomor hp baru : ");
         scanf("%s", &dataBaru);
         strcpy(psrt[i].noHp, dataBaru);
         break;
-    case 5:
-        printf("masukkan username baru : ");
+    case 6:
+        printf("Masukkan username baru : ");
         scanf("%s", &dataBaru);
         strcpy(psrt[i].user, dataBaru);
         break;
-    case 6:
-        printf("masukkan password baru : ");
+    case 7:
+        printf("Masukkan password baru : ");
         scanf("%s", &dataBaru);
         strcpy(psrt[i].password, dataBaru);
         break;
@@ -474,6 +487,10 @@ void vote()
             calon[i].suara++;
         }
     }
+    if (strcmp(psrt[indexPilih].statusPilih, "belum_memilih") == 0)
+    {
+        printf("\nError...\n\n");
+    }
     fclose(kahim);
     kahim = fopen("calon.txt", "w+");
     for (i = 1; i <= jumlahCalon; i++)
@@ -508,11 +525,11 @@ void vote()
 void statistik()
 {
     i = 1;
+    jumlahSuara = 0;
     kahim = fopen("calon.txt", "a+");
     while (fscanf(kahim, "%d\n%s\t%d\n%s", &jumlahCalon, calon[i].nama, &calon[i].suara, calon[i].visiMisi) != EOF)
     {
         jumlahSuara += calon[i].suara;
-        printf("\n%d", jumlahSuara);
         i++;
     }
     for (i = 1; i <= jumlahCalon; i++)
@@ -528,62 +545,142 @@ void statistik()
         }
     }
     fclose(kahim);
+    printf("\n\n");
 }
 /////////////////////////////////////////////////  STATISTIK
+
+/////////////////////////////////////////////////  FILTER PESERTA
+void filter()
+{
+    i = 1;
+    peserta = fopen("peserta.txt", "a+");
+    printf("\nFilter berdasarkan\n1. Angkatan 2016\n2. Angkatan 2017\n3. Angkatan 2018");
+    printf("\n\nMasukkan pilihan : ");
+    scanf("%d", &pilihanFilter);
+
+    switch (pilihanFilter)
+    {
+    case 1:
+        while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].angkatan, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password, psrt[i].statusPilih) != EOF)
+        {
+            if (strcmp(psrt[i].angkatan, "2016") == 0)
+            {
+                printf("\nNama     : %s\n", psrt[i].nama);
+                printf("NIM      : %s\n", psrt[i].nim);
+                printf("Angkatan : %s\n", psrt[i].angkatan);
+                printf("Alamat   : %s\n", psrt[i].alamat);
+                printf("Nomor Hp : %s\n", psrt[i].noHp);
+                printf("Username : %s\n", psrt[i].user);
+                printf("Password : %s\n", psrt[i].password);
+            }
+            i++;
+        }
+        break;
+    case 2:
+        while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].angkatan, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password, psrt[i].statusPilih) != EOF)
+        {
+            if (strcmp(psrt[i].angkatan, "2017") == 0)
+            {
+                printf("\nNama     : %s\n", psrt[i].nama);
+                printf("NIM      : %s\n", psrt[i].nim);
+                printf("Angkatan : %s\n", psrt[i].angkatan);
+                printf("Alamat   : %s\n", psrt[i].alamat);
+                printf("Nomor Hp : %s\n", psrt[i].noHp);
+                printf("Username : %s\n", psrt[i].user);
+                printf("Password : %s\n", psrt[i].password);
+            }
+            i++;
+        }
+        break;
+    case 3:
+        while (fscanf(peserta, "%d\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s", &jumlahPeserta, psrt[i].nama, psrt[i].nim, psrt[i].angkatan, psrt[i].alamat, psrt[i].noHp, psrt[i].user, psrt[i].password, psrt[i].statusPilih) != EOF)
+        {
+            if (strcmp(psrt[i].angkatan, "2018") == 0)
+            {
+                printf("\nNama     : %s\n", psrt[i].nama);
+                printf("NIM      : %s\n", psrt[i].nim);
+                printf("Angkatan : %s\n", psrt[i].angkatan);
+                printf("Alamat   : %s\n", psrt[i].alamat);
+                printf("Nomor Hp : %s\n", psrt[i].noHp);
+                printf("Username : %s\n", psrt[i].user);
+                printf("Password : %s\n", psrt[i].password);
+            }
+            i++;
+        }
+        break;
+    default:
+        printf("\nMaaf pilihan anda salah\n");
+        break;
+    }
+    fclose(peserta);
+}
+/////////////////////////////////////////////////  FILTER PESERTA
 
 /////////////////////////////////////////////////  MENU ADMIN
 void menuAdmin()
 {
     int pilihanAdmin;
+    system("cls");
     printf("\nMenu Admin\n");
     printf("1. Tambah calon\n2. Edit calon\n3. Hapus calon\n4. Tambah peserta\n5. Edit peserta\n6. Hapus peserta\n7. Statistik\n8. Filter suara\n9. Beranda\n\n");
-    printf("masukkan pilihan : ");
+    printf("Masukkan pilihan : ");
     scanf("%d", &pilihanAdmin);
     switch (pilihanAdmin)
     {
     case 1:
         tambahCalon();
-        //system("cls");
+        system("pause");
         menuAdmin();
         break;
     case 2:
         editCalon();
-        //system("cls");
+        system("pause");
         menuAdmin();
         break;
     case 3:
         hapusCalon();
-        //system("cls");
+        system("pause");
         menuAdmin();
         break;
     case 4:
         regis();
+        menuAdmin();
         break;
     case 5:
         editPeserta();
+        system("pause");
         menuAdmin();
         break;
     case 6:
         hapusPeserta();
+        system("pause");
         menuAdmin();
         break;
     case 7:
         statistik();
+        system("pause");
         menuAdmin();
         break;
     case 8:
+        filter();
+        system("pause");
+        menuAdmin();
         break;
     case 9:
         main();
         break;
     default:
-        printf("pilihan salah\n");
+        printf("\nError...\n\n");
+        system("pause");
+        menuAdmin();
     }
 }
 /////////////////////////////////////////////////  MENU ADMIN
 
+/////////////////////////////////////////////////  PROGRAM UTAMA
 int main()
 {
+    system("cls");
     printf("\n////////////////////////   PEMILIHAN UMUM KETUA HIMPUNAN   ////////////////////////");
     printf("\n1. Register\n2. Login");
     printf("\n\nMasukkan pilihan : ");
@@ -593,25 +690,24 @@ int main()
     {
     case 1:
         regis();
-        system("cls");
-        printf("\nAnda telah terdaftar sebagai pemilih\n\n");
-        system("pause");
-        system("cls");
         main();
         break;
     case 2:
+        system("cls");
         login();
         if (ketemu == 2)
         {
             vote();
         }
-        system("cls");
+        system("pause");
         main();
         break;
     default:
-        printf("Pilihan salah\n");
+        printf("Pilihan salah\n\n");
+        system("pause");
+        main();
         break;
     }
-
     return 0;
 }
+/////////////////////////////////////////////////  PROGRAM UTAMA
