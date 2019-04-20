@@ -6,7 +6,7 @@ bandung
 95679878
 dhana
 jakarta
-belum_memilih
+sudah_memilih
 2
 arya_ilham
 0392854
@@ -15,7 +15,7 @@ bandung
 2409857
 arya_ilham_7
 mekorama
-belum_memilih
+sudah_memilih
 3
 ilham_maulana
 982475
@@ -24,7 +24,7 @@ bandung
 948578
 ilham_aulana
 slawi_jaya
-belum_memilih
+sudah_memilih
 4
 ismatullah_hadi
 9856798
@@ -33,7 +33,7 @@ kalimantan
 9045899
 ismama
 sqimax
-belum_memilih
+sudah_memilih
 5
 izzu_zantya_fawwas
 1103184004
@@ -43,3 +43,12 @@ bandung
 izzuzantyaf
 massive
 sudah_memilih
+6
+sergio_hidayat
+948567
+2017
+trucuk_klaten
+45897
+sergio.h
+programming
+belum_memilih

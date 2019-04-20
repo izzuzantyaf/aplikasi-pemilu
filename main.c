@@ -3,7 +3,7 @@
 #include <string.h>
 
 /////////////////////////////////////////////////  DEKLARASI VARIABEL DAN STRUCT
-int pilihan, i, jumlahPeserta, jumlahCalon, pass, size, ketemu, indexPilih, jumlahSuara = 0, pilihanFilter;
+int pilihan, i, jumlahPeserta, jumlahCalon, pass, size, ketemu, indexPilih, jumlahSuara, pilihanFilter;
 char temp[32], userLogin[32], passwordLogin[32];
 
 FILE *peserta;
@@ -13,7 +13,7 @@ FILE *data;
 struct pemilih
 {
     char nama[32], nim[32], alamat[32], noHp[15], user[32], password[32], angkatan[32], statusPilih[32];
-} psrt[100];
+} psrt[101];
 
 struct cln
 {
@@ -34,10 +34,10 @@ void regis()
     {
         i++;
     }
-    if (jumlahPeserta <= 100)
+    if (jumlahPeserta <= 101)
     {
 
-        printf("\nMasukkan nama       : ");
+        printf("Masukkan nama       : ");
         fflush(stdin);
         fgets(psrt[i].nama, 32, stdin);
         strtok(psrt[i].nama, "\n");
@@ -146,7 +146,7 @@ void regis()
     }
     fclose(peserta);
     system("cls");
-    printf("\nRegistrasi berhasil\n\n");
+    printf("Registrasi berhasil\n\n");
     system("pause");
 }
 /////////////////////////////////////////////////  REGISTRASI PESERTA
@@ -176,7 +176,7 @@ void login()
                 {
                     ketemu = 2;
                     indexPilih = i;
-                    printf("login berhasil");
+                    printf("Login berhasil\n");
                 }
                 else
                 {
@@ -470,6 +470,7 @@ void vote()
 {
     int j = 1, pilihCalon, k;
     i = 1;
+
     kahim = fopen("calon.txt", "a+");
     rewind(kahim);
     while (fscanf(kahim, "%d\n%s\t%d\n%s", &jumlahCalon, calon[i].nama, &calon[i].suara, calon[i].visiMisi) != EOF)
@@ -477,8 +478,10 @@ void vote()
         printf("\n%d\n%s\n%s\n", jumlahCalon, calon[i].nama, calon[i].visiMisi);
         i++;
     }
+
     printf("\nMasukkan nomor urut calon untuk vote : ");
     scanf("%d", &pilihCalon);
+
     for (i = 1; i <= jumlahCalon; i++)
     {
         if (i == pilihCalon)
@@ -487,11 +490,13 @@ void vote()
             calon[i].suara++;
         }
     }
+
     if (strcmp(psrt[indexPilih].statusPilih, "belum_memilih") == 0)
     {
         printf("\nError...\n\n");
     }
     fclose(kahim);
+
     kahim = fopen("calon.txt", "w+");
     for (i = 1; i <= jumlahCalon; i++)
     {
@@ -505,6 +510,7 @@ void vote()
         }
     }
     fclose(kahim);
+
     peserta = fopen("peserta.txt", "w+");
     for (i = 1; i <= jumlahPeserta; i++)
     {
@@ -518,6 +524,8 @@ void vote()
         }
     }
     fclose(peserta);
+    system("cls");
+    printf("Terima kasih telah menggunakan hak pilih anda\n\n");
 }
 /////////////////////////////////////////////////  VOTE
 
@@ -621,7 +629,7 @@ void menuAdmin()
 {
     int pilihanAdmin;
     system("cls");
-    printf("\nMenu Admin\n");
+    printf("Menu Admin\n");
     printf("1. Tambah calon\n2. Edit calon\n3. Hapus calon\n4. Tambah peserta\n5. Edit peserta\n6. Hapus peserta\n7. Statistik\n8. Filter suara\n9. Beranda\n\n");
     printf("Masukkan pilihan : ");
     scanf("%d", &pilihanAdmin);
@@ -644,6 +652,7 @@ void menuAdmin()
         break;
     case 4:
         regis();
+        system("pause");
         menuAdmin();
         break;
     case 5:
@@ -681,7 +690,7 @@ void menuAdmin()
 int main()
 {
     system("cls");
-    printf("\n////////////////////////   PEMILIHAN UMUM KETUA HIMPUNAN   ////////////////////////");
+    printf("////////////////////////   PEMILIHAN UMUM KETUA HIMPUNAN   ////////////////////////");
     printf("\n1. Register\n2. Login");
     printf("\n\nMasukkan pilihan : ");
     scanf("%d", &pilihan);
